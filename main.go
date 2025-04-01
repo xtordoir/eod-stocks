@@ -18,11 +18,11 @@ func main() {
 	// init client
 	c := polygon.New(os.Getenv("POLYGON_API_KEY"))
 
-	from, err := time.Parse("2006-01-02", "2025-03-20")
+	from, err := time.Parse("2006-01-02", "2025-03-25")
 	if err != nil {
 		log.Fatalf("Error parsing 'from' date: %v", err)
 	}
-	to, err := time.Parse("2006-01-02", "2025-03-26")
+	to, err := time.Parse("2006-01-02", "2025-03-30")
 	if err != nil {
 		log.Fatalf("Error parsing 'to' date: %v", err)
 	}
@@ -36,11 +36,14 @@ func main() {
 	}.
 		WithAdjusted(true).
 		WithOrder(models.Order("asc")).
-		WithLimit(120)
+		WithLimit(600)
 
 	iter := c.ListAggs(context.Background(), params)
 
 	for iter.Next() {
+		agg := iter.Item()
+		log.Println(time.Time(agg.Timestamp))
+
 		log.Print(iter.Item())
 	}
 	if iter.Err() != nil {
