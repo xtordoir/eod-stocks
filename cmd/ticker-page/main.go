@@ -52,7 +52,7 @@ func loadTickersFromDuckDB() error {
 	defer db.Close()
 
 	// Query all tickers
-	rows, err := db.Query("SELECT ticker as symbol, name FROM tickers ORDER BY symbol")
+	rows, err := db.Query("SELECT symbol, name FROM tickers ORDER BY symbol")
 	if err != nil {
 		return err
 	}
